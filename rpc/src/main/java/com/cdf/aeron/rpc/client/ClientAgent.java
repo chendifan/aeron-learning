@@ -136,7 +136,7 @@ public class ClientAgent implements Agent {
 
     private void sendConnectRequest() {
         connectEncoder.wrapAndApplyHeader(buffer, 0, headerEncoder);
-        // subscription 对应的 inbound channel
+        // subscription 对应的 inbound channel，告诉 server 应当 pub 到哪个 channel
         connectEncoder.channel(Constants.CLIENT_INBOUND_URI);
         connectEncoder.streamId(1);
         send(buffer, headerEncoder.encodedLength() + connectEncoder.encodedLength());
