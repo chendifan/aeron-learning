@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="60">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %-5p [%t] (%c{1}:%L) - %m%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <AsyncLogger level="DEBUG" name="com.cdf"/>
+        <AsyncRoot level="WARN" includeLocation="true" additivity="false">
+            <AppenderRef ref="Console"/>
+        </AsyncRoot>
+    </Loggers>
+</Configuration>

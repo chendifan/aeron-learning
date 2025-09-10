@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sbe:messageSchema xmlns:sbe="http://fixprotocol.io/2016/sbe"
+                   package="com.cdf.aeron.rpc.sbe"
+                   id="1"
+                   version="1"
+                   semanticVersion="0.1"
+                   description="RPC SBE Messages"
+                   byteOrder="littleEndian"
+                   headerType="header"><!-- headerType 即消息头的 type，对应“header”类型 -->
+    <!-- type 预定义 -->
+    <types>
+        <composite name="header" description="Message Header">
+            <type name="blockLength" primitiveType="uint16"/>
+            <!-- 用于识别消息类型，对应 message 的 id -->
+            <type name="templateId" primitiveType="uint16"/>
+            <!-- 消息 SBE ID，对应 schema id -->
+            <type name="schemaId" primitiveType="uint16"/>
+            <!-- 消息 SBE 版本，对应 schema version -->
+            <type name="version" primitiveType="uint16"/>
+        </composite>
+        <composite name="varString">
+            <type name="length" primitiveType="uint32" maxValue="250"/>
+            <type name="varData" primitiveType="uint8" length="0" characterEncoding="UTF-8"/>
+        </composite>
+        <!-- enums, set, type 可选 -->
+    </types>
+
+    <!-- message 定义，id 不允许重复，field id 在 message 内不允许重复，type 需使用预定义的类型 -->
+    <sbe:message name="MyConnect" id="1" description="RPC Connect Request">
+        <!-- 定长 -->
+        <field name="streamId" id="1" type="uint16"/>
+        <!-- 变长 -->
+        <data name="channel" id="2" type="varString"/>
+        <!-- 数组 可选 -->
+    </sbe:message>
+
+    <sbe:message name="MyRequest" id="2" description="RPC Request">
+        <field name="id" id="1" type="uint32"/>
+        <data name="req" id="2" type="varString"/>
+    </sbe:message>
+
+    <sbe:message name="MyResponse" id="3" description="RPC Response">
+        <field name="id" id="1" type="uint32"/>
+        <data name="res" id="2" type="varString"/>
+    </sbe:message>
+</sbe:messageSchema>
