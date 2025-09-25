@@ -18,7 +18,7 @@
         <!-- project -->
         <revision>1.0-SNAPSHOT</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>24</java.version>
+        <java.version>25</java.version>
         <!-- maven -->
         <maven.compiler.version>3.13.0</maven.compiler.version>
         <maven.source.version>3.3.1</maven.source.version>
