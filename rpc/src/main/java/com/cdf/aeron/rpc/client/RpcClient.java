@@ -18,7 +18,7 @@ import org.agrona.concurrent.ShutdownSignalBarrier;
  */
 @Slf4j
 public class RpcClient {
-    public static void main(String[] args) {
+    static void main() {
         ShutdownSignalBarrier ssb = new ShutdownSignalBarrier();
         ProcessUtils.registerShutdownHook(ssb::signal);
 
@@ -53,6 +53,6 @@ public class RpcClient {
           2. 再关 Aeron，也就是 Conductor
           3. 最后关 MediaDriver (包含 MediaDriver 的 Conductor)
          */
-        CloseHelper.quietCloseAll(agentRunner, aeron, mediaDriver);
+        CloseHelper.quietCloseAll(ssb, agentRunner, aeron, mediaDriver);
     }
 }
