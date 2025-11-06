@@ -1,14 +1,11 @@
 package com.cdf.aeron.common.util;
 
-import com.cdf.aeron.common.extend.OrderedNamedRunnable;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.time.Duration;
-import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
@@ -19,46 +16,9 @@ import static java.util.Objects.isNull;
  */
 @Slf4j
 public class ProcessUtils {
-    private static final NavigableSet<OrderedNamedRunnable> ORDERED_RUNNABLE_SET = new TreeSet<>(Comparator.comparingInt(OrderedNamedRunnable::getOrder));
-    private static final Set<Runnable> RUNNABLE_SET = new HashSet<>();
     private static final String SPLITTER = " ";
 
-    static {
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            for (OrderedNamedRunnable runnable : ORDERED_RUNNABLE_SET) {
-                try {
-                    Thread thread = new Thread(runnable);
-                    thread.start();
-                    thread.join(Duration.ofMillis(500));
-                } catch (InterruptedException e) {
-                    log.error("thread interrupted when running [{}]", runnable.getName(), e);
-                }
-            }
-            for (Runnable runnable : RUNNABLE_SET) {
-                try {
-                    Thread thread = new Thread(runnable);
-                    thread.start();
-                    thread.join(Duration.ofMillis(500));
-                } catch (InterruptedException e) {
-                    log.error("thread interrupted", e);
-                }
-            }
-        }));
-    }
-
     private ProcessUtils() {
-    }
-
-    public static void registerShutdownHook(Runnable r) {
-        if (r instanceof OrderedNamedRunnable or) {
-            synchronized (ORDERED_RUNNABLE_SET) {
-                ORDERED_RUNNABLE_SET.add(or);
-            }
-        } else {
-            synchronized (RUNNABLE_SET) {
-                RUNNABLE_SET.add(r);
-            }
-        }
     }
 
     public static void ls(File file) {

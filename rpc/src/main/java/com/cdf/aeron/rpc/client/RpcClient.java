@@ -1,7 +1,6 @@
 package com.cdf.aeron.rpc.client;
 
 import com.cdf.aeron.common.help.DefaultErrorHandler;
-import com.cdf.aeron.common.util.ProcessUtils;
 import com.cdf.aeron.rpc.Constants;
 import io.aeron.Aeron;
 import io.aeron.driver.MediaDriver;
@@ -20,7 +19,6 @@ import org.agrona.concurrent.ShutdownSignalBarrier;
 public class RpcClient {
     static void main() {
         ShutdownSignalBarrier ssb = new ShutdownSignalBarrier();
-        ProcessUtils.registerShutdownHook(ssb::signal);
 
         // 创建一个 MediaDriver
         MediaDriver.Context mediaDriverCtx = new MediaDriver.Context()

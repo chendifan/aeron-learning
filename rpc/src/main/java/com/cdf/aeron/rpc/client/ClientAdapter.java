@@ -1,6 +1,5 @@
 package com.cdf.aeron.rpc.client;
 
-import com.cdf.aeron.common.help.ExitSignalListener;
 import com.cdf.aeron.rpc.sbe.HeaderDecoder;
 import com.cdf.aeron.rpc.sbe.MyResponseDecoder;
 import io.aeron.logbuffer.FragmentHandler;
@@ -32,7 +31,6 @@ public class ClientAdapter implements FragmentHandler {
             if (log.isInfoEnabled()) {
                 log.info("response received, id: {}, res: {}", responseDecoder.id(), responseDecoder.res());
             }
-            ExitSignalListener.signalShutdown();
         } else {
             log.warn("unknown message, templateId: {}", headerDecoder.templateId());
         }
