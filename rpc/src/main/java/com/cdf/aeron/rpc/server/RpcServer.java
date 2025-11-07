@@ -51,6 +51,6 @@ public class RpcServer {
           2. 再关 Aeron，也就是 Conductor
           3. 最后关 MediaDriver (包含 MediaDriver 的 Conductor)
          */
-        CloseHelper.quietCloseAll(ssb, agentRunner, aeron, mediaDriver);
+        CloseHelper.quietCloseAll(agentRunner, aeron, mediaDriver, ssb);
     }
 }
